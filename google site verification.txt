@@ -1,0 +1,43 @@
+google-site-verification=lR0X4PWgwwpAQU_5ZutTh-434_1kAel5yNZNb1nXaxM
+
+Google key
+
+
+This page contains the following errors:
+error on line 1 at column 2: StartTag: invalid element name
+Below is a rendering of the page up to the first error.
+
+XML Parsing Error: syntax error
+Location: https://skyline-wealth.com/sitemap.xml
+Line Number 1, Column 1:
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>React App</title><script src="http://localhost:8097"></script><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:300|PT+Sans:700" rel="stylesheet"/><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/><link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet"/><link rel="stylesheet" href="./src/styles/index.css"/><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/><script defer="defer" src="/static/js/main.30b2d8e1.js"></script><link href="/static/css/main.d0d91200.css" rel="stylesheet"></head><body><div id="root"></div></body></html>
+^
+
+curl -I https://skyline-wealth.com/sitemap.xml
+
+Access Key: AKIAZPPF74O2TLOEHNDK
+
+Secret Key: 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
+
+Console password: '0pK7[$6
+
+Skyline Legacy Access Key : AKIAZPPF74O24G34NS4S
+
+Skyline Legacy Secret key : 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
+
+Lanching Amplify App:
+
+amplify init
+amplify add hosting
+amplify push
+amplify publish
+
+Redeploy Amplify App: 
+
+npm install
+npm run build
+
+cd build
+zip -r build.zip *
+
+
