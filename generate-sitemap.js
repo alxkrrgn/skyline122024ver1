@@ -18,8 +18,8 @@ const { createWriteStream } = require('fs');
 
   const sitemapBuffer = await streamToPromise(sitemap);
 
-  createWriteStream('./public/sitemap.xml').write(sitemapBuffer);
-  console.log('Sitemap generated!');
+ // createWriteStream('./public/sitemap.xml').write(sitemapBuffer);
+ // console.log('Sitemap generated!');
 
   streamToPromise(sitemap)
   .then((sm) => fs.writeFileSync("./public/sitemap.xml", sm.toString()))
