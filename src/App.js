@@ -27,8 +27,8 @@ import ReactResponsive from './components/ReactResponsive';
 import CardContainer from './components/CardContainer';
 import FlexBoxStrategiesTopics from './components/FlexBoxStrategiesTopics';
 
-
 import NavigationMenu from './components/NavigationMenu';
+import InvestmentPage from './components/InvestmentPage';
 
 //const mailer = require('./config/mailer'); // Correct relative path
 //app.use('/config', mailer);
@@ -102,6 +102,7 @@ function App() {
             <Route path="/getstarted" element={<GetStartedGit />} />
             <Route path="/navigate" element={<NavigationMenu />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/investment" element={<InvestmentPage />} />
 
             {/* <Route path="/about" element={<About />} /> */}
           </Routes>
