@@ -139,32 +139,32 @@ const FooterResponsive = () => {
             <div className="socialLinks">
               <ul>
                 <li>
-                  <a href="#">
+                  <a href="https://facebook.com">
                     <i className="fab fa-facebook-f" />
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="https://twitter.com">
                     <i className="fab fa-twitter" />
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="https://linkedin.com">
                     <i className="fab fa-linkedin-in" />
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="https://google.com">
                     <i className="fab fa-google-plus-g" />
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="https://instagram.com">
                   <i className="fab fa-instagram instagram-icon"></i>
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="https://youtube.com">
                     <i className="fab fa-youtube" />
                   </a>
                 </li>
