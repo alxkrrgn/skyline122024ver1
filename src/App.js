@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Routes instead of Switch
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import the AOS CSS for animations to work
+import { HelmetProvider } from 'react-helmet-async';
 
 import Header from "./components/Header";
 import FooterResponsive from "./components/FooterResponsive";
@@ -60,7 +61,7 @@ function App() {
   }, []);
 
   return (
-
+  <HelmetProvider> 
     <Router>
         <div className="App">
       
@@ -123,6 +124,7 @@ function App() {
         
         </div>
       </Router>
+   </HelmetProvider>   
   );
 }
 

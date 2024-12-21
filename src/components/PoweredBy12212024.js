@@ -4,22 +4,12 @@ import { useEffect } from 'react';
 import '../styles/poweredby.css'; // Import the CSS file specific to About component
 
 function PoweredBy() {
-
-
+  
     document.addEventListener("DOMContentLoaded", () => {
-
-      useEffect(() => {
         const logosContainer = document.querySelector(".logos");
-
-        if (logosContainer) {
         const clonedLogos = logosContainer.innerHTML; // Clone the content
 
         logosContainer.innerHTML += clonedLogos; // Append the cloned content
-
-      } else {
-        console.warn('logosContainer is not available');
-      }
-    }, []);
       });
 
   return (
