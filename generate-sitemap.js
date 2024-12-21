@@ -1,4 +1,5 @@
 const { SitemapStream, streamToPromise } = require('sitemap');
+const fs = require("fs");
 const { createWriteStream } = require('fs');
 
 (async () => {
@@ -19,4 +20,8 @@ const { createWriteStream } = require('fs');
 
   createWriteStream('./public/sitemap.xml').write(sitemapBuffer);
   console.log('Sitemap generated!');
+
+  streamToPromise(sitemap)
+  .then((sm) => fs.writeFileSync("./public/sitemap.xml", sm.toString()))
+  .catch(console.error);
 })();
