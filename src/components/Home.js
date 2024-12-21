@@ -43,7 +43,7 @@ import FullWidthTitle from './FullWidthTitle';
 import PoweredBy from './PoweredBy';
 import GridContainerMore from './GridContainerMore';
 import { SixCardsRandom, GridContainerRandom } from './RandomCardItems';
-
+import { Helmet } from "react-helmet-async";
 
 function Home() {
 
