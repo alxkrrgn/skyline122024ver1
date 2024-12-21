@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "skylineGhVer1",
+			"path": "."
+		},
+		{
+			"name": "html",
+			"path": "../../../var/www/html"
+		}
+	],
+	"settings": {}
+}
