@@ -31,7 +31,7 @@ const ReactResponsive = () => {
         // Desktop mode: Static video source
         return {
           type: "video",
-          source: "/videos/BlueStockDesk204306-923909642.mp4",
+          source: "/videos/NYdayDTdesktop_1920_1080_30fps.mp4",
         };
       }
     };
