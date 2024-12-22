@@ -22,7 +22,7 @@ const ReactResponsive = () => {
       if (isMobile) {
         // Mobile mode: Randomly select an image
         const randomIndex = Math.floor(Math.random() * 150).toString().padStart(3, "0");
-        const imageSource = `/images/BlueStockMob204306-923909642/BlueStockMob204306-923909642_cropped_${randomIndex}.jpg`;
+        const imageSource = `https://backend.skyline-wealth.com/BlueStockMob204306-923909642/BlueStockMob204306-923909642_cropped_${randomIndex}.jpg`;
         return {
           type: "image",
           source: imageSource,
