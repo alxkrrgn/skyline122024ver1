@@ -263,12 +263,12 @@ const FooterResponsive = () => {
                 </a>
               </li>
               <li>
-                <a href="/">
+                <a href="/privacy">
                   privacy
                 </a>
               </li>
               <li>
-                <a href="/">
+                <a href="/terms">
                   terms
                 </a>
               </li>
@@ -287,7 +287,7 @@ const FooterResponsive = () => {
       <div className="container">
         <div className="row">
           <div className="col-12 text-center">
-          <a>Copyright &copy; {currentYear} Skyline Capital | All Rights Reserved</a>
+          <a href="/privacy">Copyright &copy; {currentYear} Skyline Capital | All Rights Reserved</a>
           </div>
         </div>
       </div>

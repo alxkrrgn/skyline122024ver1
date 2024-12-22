@@ -30,6 +30,8 @@ import FlexBoxStrategiesTopics from './components/FlexBoxStrategiesTopics';
 
 import NavigationMenu from './components/NavigationMenu';
 import InvestmentPage from './components/InvestmentPage';
+import Privacy from './components/Privacy';
+import Terms from './components/Terms';
 
 //const mailer = require('./config/mailer'); // Correct relative path
 //app.use('/config', mailer);
@@ -104,6 +106,8 @@ function App() {
             <Route path="/navigate" element={<NavigationMenu />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/investment" element={<InvestmentPage />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
 
             {/* <Route path="/about" element={<About />} /> */}
           </Routes>
