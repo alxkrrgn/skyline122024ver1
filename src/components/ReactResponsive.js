@@ -67,7 +67,7 @@ const ReactResponsive = () => {
               borderRadius: "20px",
             }}
           >
-           {/* <Suspense fallback={<div>Loading Video...</div>}> */}
+            <Suspense fallback={<div>Loading Video...</div>}> 
               <ReactPlayer
                 url={data.source}
                 playing
@@ -76,7 +76,7 @@ const ReactResponsive = () => {
                 width="100%"
                 height="100%"
               />
-            {/* </Suspense> */}
+             </Suspense> 
             {/* Overlay Content */}
             <div
               style={{
