@@ -3,7 +3,7 @@ import Hero from "./Hero"; // Import your Hero component
 import "../styles/App.css"; // Import the CSS file for styling
 
 // Lazy load ReactPlayer to defer its loading until necessary
-const ReactPlayer = lazy(() => import("react-player/lazy"));
+const ReactPlayer = lazy(() => import("react-player"));
 
 const ReactResponsive = () => {
   const [data, setData] = useState(null);
@@ -32,7 +32,6 @@ const ReactResponsive = () => {
         return {
           type: "video",
           source: "https://backend.skyline-wealth.com/BlueStockDesk204306-923909642.mp4",
-          poster: "https://backend.skyline-wealth.com/posters/BlueStockDeskPoster.jpg", // Optimized poster image
         };
       }
     };
@@ -68,31 +67,16 @@ const ReactResponsive = () => {
               borderRadius: "20px",
             }}
           >
-            <Suspense fallback={<div>Loading Video...</div>}>
-              <div style={{ position: "relative", paddingTop: "56.25%" }}>
-                <ReactPlayer
-                  url={data.source}
-                  playing
-                  loop
-                  muted
-                  width="100%"
-                  height="100%"
-                  style={{
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                  }}
-                  config={{
-                    file: {
-                      attributes: {
-                        preload: "metadata", // Load video metadata only
-                        poster: data.poster, // Display a placeholder image
-                      },
-                    },
-                  }}
-                />
-              </div>
-            </Suspense>
+            <Suspense fallback={<div>Loading Video...</div>}> 
+              <ReactPlayer
+                url={data.source}
+                playing
+                loop
+                muted
+                width="100%"
+                height="100%"
+              />
+             </Suspense> 
             {/* Overlay Content */}
             <div
               style={{
@@ -154,6 +138,5 @@ const ReactResponsive = () => {
 };
 
 export default ReactResponsive;
-
 
 
