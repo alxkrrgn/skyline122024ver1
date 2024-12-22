@@ -31,7 +31,7 @@ const ReactResponsive = () => {
         // Desktop mode: Static video source
         return {
           type: "video",
-          source: "/videos/NYdayDTdesktop_1920_1080_30fps.mp4",
+          source: "/videos/NYdayDTdesktop_1920_1080_30fps.mp4?v=2",
         };
       }
     };
