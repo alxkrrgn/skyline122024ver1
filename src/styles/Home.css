@@ -49,7 +49,7 @@ section {
 @media (max-width: 768px) {
   .spacer {
     margin-top: 2vh; /* Default for desktop */
-    margin-bottom: 2vh; /* Default for desktop */
+    margin-bottom: 5vh; /* Default for desktop */
 
   }
   .spacer1 {
