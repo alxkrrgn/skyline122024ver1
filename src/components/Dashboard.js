@@ -5,6 +5,7 @@ import CardContainerDashboard from './CardContainerDashboard';
 import FinancialDashboard from './FinancialDashboard';
 import { useNavigate } from 'react-router-dom'; // Ensure React Router is set up
 import NavigationMenu from './NavigationMenu';
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
     const [userData, setUserData] = useState(null);
@@ -28,7 +29,11 @@ const Dashboard = () => {
   return (
 
     <>
-
+    <Helmet>
+            <title>Home</title>
+            <meta name="description" content="Discover effective investment strategies, financial planning tips, and portfolio diversification techniques for wealth accumulation." />
+            <meta name="keywords" content="Investment strategies, Financial planning, Wealth accumulation, Asset allocation, Economic growth, Cryptocurrency, Portfolio diversification, Risk assessment, Stock market, Mutual funds, Financial independence, Retirement planning, Sustainable investing, Market trends" />
+    </Helmet>
     <section>
 {/*
     <div className="dashboard">

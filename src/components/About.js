@@ -1,9 +1,16 @@
 // src/components/About.js
 import React from 'react';
+import { Helmet } from "react-helmet-async";
 import '../styles/About.css'; // Import the CSS file specific to About component
 
 function About() {
   return (
+<>
+    <Helmet>
+            <title>About</title>
+            <meta name="description" content="Discover effective investment strategies, financial planning tips, and portfolio diversification techniques for wealth accumulation." />
+            <meta name="keywords" content="Investment strategies, Financial planning, Wealth accumulation, Asset allocation, Economic growth, Cryptocurrency, Portfolio diversification, Risk assessment, Stock market, Mutual funds, Financial independence, Retirement planning, Sustainable investing, Market trends" />
+    </Helmet>
     <div className="about">
       <h1>About Us</h1>
       <p>
@@ -26,6 +33,7 @@ function About() {
         <li>Excellence</li>
       </ul>
     </div>
+</>
   );
 }
 
