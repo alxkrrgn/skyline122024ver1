@@ -32,7 +32,7 @@ const ReactResponsive = () => {
         return {
           type: "video",
           source: "https://backend.skyline-wealth.com/BlueStockDesk204306-923909642.mp4",
-          poster: "https://backend.skyline-wealth.com/posters/BlueStockDeskPoster.jpg", // Optimized poster image
+          poster: "/images/BlueStockDesk204306-923909642_000.jpg", // Optimized poster image
         };
       }
     };
