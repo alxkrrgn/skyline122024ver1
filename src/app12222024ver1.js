@@ -22,19 +22,6 @@ app.get('/sitemap.xml', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
 });
 
-app.disable('etag');
-
-app.get('/sitemap', (req, res) => {
-  res.set({
-    'Content-Type': 'application/xml',
-    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-    'Pragma': 'no-cache',
-    'Expires': '0',
-    'Last-Modified': new Date().toUTCString(),
-  });
-
-  res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
-});
 // Serve sitemap.xml
 app.get('/sitemap.xml', async (req, res) => {
   try {
@@ -84,8 +71,8 @@ app.get('/sitemap', async (req, res) => {
     // Generate XML from the sitemap
     const xmlData = await streamToPromise(sitemap);
 
-       // Respond with XML content
-    res.header('Content-Type', 'application/xml');
+    // Respond with XML content
+    res.set('Content-Type', 'application/xml');
     res.send(xmlData);
   } catch (error) {
     console.error('Error generating sitemap:', error);
@@ -93,6 +80,10 @@ app.get('/sitemap', async (req, res) => {
   }
 });
 
+// Catch-all route to serve the React app for all other requests
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 /*
 // Middleware
 app.use(cors({

@@ -32,6 +32,7 @@ import NavigationMenu from './components/NavigationMenu';
 import InvestmentPage from './components/InvestmentPage';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
+import SitemapPage from './components/SitemapPage';
 
 //const mailer = require('./config/mailer'); // Correct relative path
 //app.use('/config', mailer);
@@ -108,6 +109,7 @@ function App() {
             <Route path="/investment" element={<InvestmentPage />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/sitemap" element={<SitemapPage />} />
 
             {/* <Route path="/about" element={<About />} /> */}
           </Routes>
