@@ -22,6 +22,7 @@ const { createWriteStream } = require('fs');
   const sitemapBuffer = await streamToPromise(sitemap);
 
   createWriteStream('./public/sitemap.xml').write(sitemapBuffer);
+  createWriteStream('sitemap.xml').write(sitemapBuffer);
   console.log('Sitemap generated!');
 
  // streamToPromise(sitemap)
