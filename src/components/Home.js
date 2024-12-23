@@ -135,7 +135,7 @@ function Home() {
 
 <SixCardsRandom />
 
-<a href="/getstarted" className="spacer" >
+<a href="/getstarted"  className='spacer1'>
 <button 
   className="button-81" 
   // data-aos="fade-in"
