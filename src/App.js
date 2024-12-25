@@ -33,6 +33,7 @@ import InvestmentPage from './components/InvestmentPage';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import SitemapPage from './components/SitemapPage';
+import Clarity from './Clarity';
 
 //const mailer = require('./config/mailer'); // Correct relative path
 //app.use('/config', mailer);
@@ -52,6 +53,9 @@ import SitemapPage from './components/SitemapPage';
 function App() {
 
   useEffect(() => {
+
+    const projectId = 'pj8nnn6sz5'; // Replace with your Clarity project ID
+    Clarity.init(projectId); // Initialize Clarity and inject the script
 
     AOS.init({
       duration: 1000,
