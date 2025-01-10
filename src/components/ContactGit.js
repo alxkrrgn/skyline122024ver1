@@ -48,7 +48,7 @@ const ContactGit = () => {
         }
 
         if (formData.subject === '' ) {
-            setServerMessage({ text: 'Please tyoe a subject:', type: 'error' });
+            setServerMessage({ text: 'Please type a subject:', type: 'error' });
             return;
         }
         if (formData.name === '' ) {
