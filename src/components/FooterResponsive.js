@@ -51,9 +51,9 @@ const FooterResponsive = () => {
               return;
           }
           
-          formData.name = 'Subceribe to Newsletter';
-          formData.question = 'Subceribe to Newsletter';
-          formData.phonenumber = 'Subceribe to Newsletter';
+          formData.name = 'Subscribe to Newsletter';
+          formData.question = 'Subscribe to Newsletter';
+          formData.phonenumber = 'Subscribe to Newsletter';
 
           if (formData.name === '' ) {
             setServerMessage({ text: 'Please enter your name:', type: 'error' });
