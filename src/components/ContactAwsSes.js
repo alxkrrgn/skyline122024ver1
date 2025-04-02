@@ -102,8 +102,8 @@ const ContactAwsSes = () => {
                 body: postData, // Let the browser handle Content-Type
             });
 
-            console.log('Response status:', response.status);
-            console.log('Response HTML status:', responseHTML.status);
+            //console.log('Response status:', response.status);
+           // console.log('Response HTML status:', responseHTML.status);
 
             /*
             if (!response.ok || !responseHTML.ok) {
