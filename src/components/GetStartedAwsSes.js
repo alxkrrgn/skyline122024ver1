@@ -100,8 +100,8 @@ const GetStartedAwsSes = () => {
             console.log('Response HTML status:', responseHTML.status);
         
              // Check for server-side errors
-           // if (!response.ok || !responseHTML.ok) {
-            if (!responseHTML.ok) { 
+            if (!response.ok || !responseHTML.ok) {
+            //if (!responseHTML.ok) { 
                 // Log errors and show the appropriate error message
                 console.error(`Error: Response status: ${response.status}, Response HTML status: ${responseHTML.status}`);
             
