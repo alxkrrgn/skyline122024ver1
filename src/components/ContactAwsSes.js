@@ -76,12 +76,20 @@ const ContactAwsSes = () => {
         }
 
         try {
-
+            /*
             const API_URL = window.location.hostname.includes('skylinecapital.info')
                 ? 'https://skylinecapital.info/api/send-email'
                 : 'https://skyline-wealth.com/api/send-email';
 
             const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            */
+            const response = await fetch('http://localhost:3001/api/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -105,8 +113,7 @@ const ContactAwsSes = () => {
             console.log('Response status:', response.status);
             console.log('Response HTML status:', responseHTML.status);
 
-            //if (!response.ok || !responseHTML.ok) {
-            if ( !responseHTML.ok) {
+            if (!response.ok || !responseHTML.ok) {
                 // Log errors and show the appropriate error message
                 console.error(`Error: Response status: ${response.status}, Response HTML status: ${responseHTML.status}`);
             
