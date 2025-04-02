@@ -18,7 +18,6 @@ const FooterResponsive = () => {
   
       const [validationMessage, setValidationMessage] = useState({ text: '', type: '' });
       const [serverMessage, setServerMessage] = useState({ text: '', type: '' });
-      const [isSubmitting, setIsSubmitting] = useState(false);
   
       //const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   
@@ -43,27 +42,23 @@ const FooterResponsive = () => {
   
       const handleSubmit = async (e) => {
           e.preventDefault();
-          setIsSubmitting(true);  // This will prevent multiple submissions
   
           if (formData.email === '' ) {
               setServerMessage({ text: 'Please enter your email:', type: 'error' });
-              setIsSubmitting(false);
               return;
           }
           
           formData.name = 'Subceribe to Newsletter';
           formData.question = 'Subceribe to Newsletter';
-          formData.phonenumber = 'Subceribe to Newsletter';
+          formData.phonenumber = '212-555-5555';
 
           if (formData.name === '' ) {
             setServerMessage({ text: 'Please enter your name:', type: 'error' });
-            setIsSubmitting(false);
             return;
           }
   
           if (formData.question === '' ) {
               setServerMessage({ text: 'Please choose a question:', type: 'error' });
-              setIsSubmitting(false);
               return;
           }
 
@@ -76,74 +71,54 @@ const FooterResponsive = () => {
           
               console.log('Post data:', Object.fromEntries(postData.entries()));
   
-              const responseHTML = await fetch('https://backend.skyline-wealth.com/getstartedGit.php', {
-                method: 'POST',
-                body: postData, // Let the browser handle Content-Type
+  
+              const response = await fetch('https://backend.skyline-wealth.com/getstartedGit.php', {
+                  method: 'POST',
+                  body: postData, // Let the browser handle Content-Type
               });
-
-              const response = await fetch('https://backend.skyline-wealth.com/send-mail.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-              });
-
-              //console.log('Response status:', response.status);
-              //console.log('Response HTML status:', responseHTML.status);
+  
+              console.log('Response status:', response.status);
           
-              // Check for server-side errors
-              if (!response.ok || !responseHTML.ok) {
-              //if (!responseHTML.ok) { 
-                  // Log errors and show the appropriate error message
-                  console.error(`Error: Response status: ${response.status}, Response HTML status: ${responseHTML.status}`);
-                  //console.error(`Error: Response HTML status: ${responseHTML.status}`);
-              
-                  setServerMessage({ 
-                      text: `Error: ${response.status} || ${responseHTML.status}. Please try again later.`,
-                      //text: `Error: ${responseHTML.status}. Please try again later.`,
-                      type: 'error'
-                  });
-                  return;  // Stop execution if there is an error
+               // Check for server-side errors
+               if (!response.ok) {
+                  console.error('Server returned an error:', response.statusText);
+                  setServerMessage({ text: 'Server error occurred.', type: 'error' });
+                  return;
               }
-
-              const data = await response.json();
-              const dataHTML = await responseHTML.json();
-              
-              // Check if both responses have success messages
-              if (data.success || dataHTML.success) {
-              //if ( dataHTML.success) {   
-                  setServerMessage({ 
-                      text: 'Thank you! You are subscribed now!', 
-                      type: 'success' 
-                  });
-              } else {
-                  // If either response contains an error, display the error message
-                  setServerMessage({ 
-                      text: data.error || dataHTML.error || 'An unexpected error occurred. Please try again.', 
-                      //text: dataHTML.error || 'An unexpected error occurred. Please try again.', 
-                      type: 'error' 
-                  });
-              }
-              
-              // Reset form on success
-              setFormData({
-                  email: '',
-                  name: '',
-                  phonenumber: '',
-                  question: '',
-              });
-
-              } catch (error) {
-              console.error('Submission error:', error);
-              setServerMessage({ 
-                  text: error.message || 'Failed to send message. Please try again.',
-                  type: 'error' 
-              });
-              } finally {
-              setIsSubmitting(false);
-              }
-        };
+          
+              // Parse JSON response
+               // Parse JSON response
+  
+  
+              const rawText = await response.text(); // Log raw response
+              console.log('Raw response:', rawText);
+  
+              const data = JSON.parse(rawText); // Parse JSON
+              console.log('Parsed response:', data);
+  
+              console.log('Response data:', data);
+  
+              if (data.success) {
+                setServerMessage({ text: data.message, type: 'success' });
+                /*
+                localStorage.setItem('userData', JSON.stringify(data.userData));
+                setTimeout(() => {
+                    navigate(data.redirect); // Redirect to the dashboard
+                }, 2000); */
+              // if (data.redirect) {
+             //   window.location.href = data.redirect; // Navigate to /dashboard
+                    //    }
+                 } else {
+                     setServerMessage({ text: data.error, type: 'error' });
+                 }
+             } catch (error) {
+                    console.error('Error:', error);
+                     setServerMessage({
+                    text: 'An error occurred during login.',
+                    type: 'error',
+               });
+            }
+          };
 
   return (
     
