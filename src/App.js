@@ -3,17 +3,19 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Routes instead of Switch
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import the AOS CSS for animations to work
+import { HelmetProvider } from 'react-helmet-async';
 
 import Header from "./components/Header";
 import FooterResponsive from "./components/FooterResponsive";
 import Home from "./components/Home";
 import About from "./components/About";
 import ContactGit from "./components/ContactGit";
+import ContactAwsSes from "./components/ContactAwsSes";
 import Strategies from "./components/Strategies";
 import FlexBoxStockOptionsPage from "./components/FlexBoxStockOptionsPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import GetStartedGit from "./components/GetStartedGit";
+import GetStartedAwsSes from "./components/GetStartedAwsSes";
 import Dashboard from './components/Dashboard';
 
 //import AOS from 'locomotive-aos'; // Example, adjust based on library docs
@@ -27,8 +29,12 @@ import ReactResponsive from './components/ReactResponsive';
 import CardContainer from './components/CardContainer';
 import FlexBoxStrategiesTopics from './components/FlexBoxStrategiesTopics';
 
-
 import NavigationMenu from './components/NavigationMenu';
+import InvestmentPage from './components/InvestmentPage';
+import Privacy from './components/Privacy';
+import Terms from './components/Terms';
+import SitemapPage from './components/SitemapPage';
+import Clarity from './Clarity';
 
 //const mailer = require('./config/mailer'); // Correct relative path
 //app.use('/config', mailer);
@@ -49,6 +55,9 @@ function App() {
 
   useEffect(() => {
 
+    const projectId = 'pj8nnn6sz5'; // Replace with your Clarity project ID
+    Clarity.init(projectId); // Initialize Clarity and inject the script
+
     AOS.init({
       duration: 1000,
       offset: 100,
@@ -60,7 +69,7 @@ function App() {
   }, []);
 
   return (
-
+  <HelmetProvider> 
     <Router>
         <div className="App">
       
@@ -68,7 +77,9 @@ function App() {
          {/* 
           {/*
          <AnimatedXOtriangles />
+         <AnimatedPixelStars />
           */}
+         
          <AnimatedPixelStars />
         
         {/* <VideoBgPage /> */}
@@ -94,14 +105,18 @@ function App() {
             /> */}
             <Route path="/" element={<Home />} />  {/* Define routes with the 'element' prop */}
             <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<ContactGit />} />
+            <Route path="/contact" element={<ContactAwsSes />} />
             <Route path="/strategies" element={<Strategies />} />
             <Route path="/stock-options" element={<FlexBoxStockOptionsPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/getstarted" element={<GetStartedGit />} />
+            <Route path="/getstarted" element={<GetStartedAwsSes />} />
             <Route path="/navigate" element={<NavigationMenu />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/investment" element={<InvestmentPage />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/sitemap" element={<SitemapPage />} />
 
             {/* <Route path="/about" element={<About />} /> */}
           </Routes>
@@ -122,6 +137,7 @@ function App() {
         
         </div>
       </Router>
+   </HelmetProvider>   
   );
 }
 

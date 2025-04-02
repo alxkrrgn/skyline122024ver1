@@ -43,13 +43,18 @@ import FullWidthTitle from './FullWidthTitle';
 import PoweredBy from './PoweredBy';
 import GridContainerMore from './GridContainerMore';
 import { SixCardsRandom, GridContainerRandom } from './RandomCardItems';
-
+import { Helmet } from "react-helmet-async";
 
 function Home() {
 
   return (
 
 <>
+<Helmet>
+        <title>Home</title>
+        <meta name="description" content="Discover effective investment strategies, financial planning tips, and portfolio diversification techniques for wealth accumulation." />
+        <meta name="keywords" content="Investment strategies, Financial planning, Wealth accumulation, Asset allocation, Economic growth, Cryptocurrency, Portfolio diversification, Risk assessment, Stock market, Mutual funds, Financial independence, Retirement planning, Sustainable investing, Market trends" />
+</Helmet>
 
 {/*  <EmptyItem colSpan={2} /> */}
 
@@ -64,31 +69,7 @@ function Home() {
 <CardContainer /> 
 
 {/*  
-<section>
-<div className="cards">
-  <div className="card">
-    <h1>Invest Smarter</h1> 
-    <h3>Service 1</h3>
-    <p>By employing advanced risk management techniques, innovative portfolio strategies, 
-  and sophisticated hedge strategies, we aim to deliver superior returns compared to 
-  conventional mutual funds and portfolio management methods.</p>
-  </div>
-  <div className="card">
-    <h1>With Diversity</h1>
-    <h3>Service 2</h3>
-    <p>We offer great quality.</p>
-  </div>
-  <div className="card">
-    <h1>Service 3</h1>
-    <p>Trust us to get the job done.</p>
-  </div>
-  <div className="card">
-    <h2>Service 4</h2>
-    <p>Trust us to get the job done.</p>
-  </div>
-</div>
 
-</section>
 
 {/*  
   <section className="hero">
@@ -130,8 +111,8 @@ function Home() {
 
 <SixCardsRandom />
 
-<a href="/getstarted" >
-<button
+<a href="/getstarted"  className='spacer1'>
+<button 
   className="button-81" 
   // data-aos="fade-in"
   //data-aos-duration={1000} 

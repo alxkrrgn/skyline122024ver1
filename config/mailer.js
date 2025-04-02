@@ -1,47 +1,93 @@
-// mailer.js
-const express = require('express');
 const nodemailer = require('nodemailer');
-const router = express.Router();
-const cors = require('cors');
-const app = express();
+require('dotenv').config();
 
-// CORS configuration
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+const mailer = {
+  transporter: nodemailer.createTransport({
+    host: process.env.SES_SMTP_HOST,
+    port: process.env.SES_SMTP_PORT || 587,
+    secure: false,
+    auth: {
+      user: process.env.SES_SMTP_USERNAME,
+      pass: process.env.SES_SMTP_PASSWORD
+    },
+    tls: {
+      ciphers: 'TLSv1.2',
+      rejectUnauthorized: true
+    }
+  }),
+
+  sendContactForm: async ({ email, name, subject, phonenumber, message , question}) => {
+    try {
+      // Get current date and time in local format
+      const currentDateTime = new Date().toLocaleString();
+
+      const mailOptions = {
+        from: process.env.EMAIL_FROM,
+        to: process.env.ADMIN_EMAIL,
+        subject: subject || 'New Message From Skyline Contact/Get Started Forms',
+        text: `
+          New Message From Skyline Contact/Get Started Forms:
+          
+          From: ${name} <${email}>
+          Subject: ${subject}, ${phonenumber}
+          Date/Time: ${currentDateTime}
+          
+          Message:
+          ${message}, ${question}
+        `,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px;">
+            <h2 style="color: #333;">New Message From Skyline Contact/Get Started Forms:</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">From:</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${name} &lt;${email}&gt;</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Subject:</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${subject}</td>
+              </tr>
+                <tr>
+                <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Phone Number:</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${phonenumber}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Date/Time:</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${currentDateTime}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; vertical-align: top;">Message:</td>
+                <td style="padding: 8px; border: 1px solid #ddd; white-space: pre-line;">${message}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; vertical-align: top;">Question:</td>
+                <td style="padding: 8px; border: 1px solid #ddd; white-space: pre-line;">${question}</td>
+              </tr>
+            </table>
+          </div>
+        `,
+        replyTo: email
+      };
+
+      const info = await mailer.transporter.sendMail(mailOptions);
+      return { success: true, messageId: info.messageId };
+    } catch (error) {
+      console.error('Mailer error:', error);
+      return { success: false, error: error.message };
+    }
+  }
 };
 
-router.post('/config/send-email', cors(corsOptions), async (req, res) => {
-  const { name, email, subject, message } = req.body;
+module.exports = mailer;
 
-  if (!email || !message) {
-    return res.status(400).json({ error: 'Email and message are required.' });
-  }
-
+mailer.testConnection = async () => {
   try {
-    await transporter.sendMail({
-      from: `"${name || 'Anonymous'}" <skylinecapitalam@gmail.com>`,
-      to: 'alxkrgn@hotmail.com, admin@cyrus.publicvm.com',
-      subject: `${subject || 'Customer Request'} - From ${email}`,
-      text: message,
-    });
-
-    res.status(200).json({ success: 'Message sent successfully!' });
+    await mailer.transporter.verify();
+    console.log('Server is ready to send emails');
   } catch (error) {
-    res.status(500).json({ error: `Failed to send message: ${error.message}` });
+    console.error('Connection test failed:', error);
   }
-});
+};
 
-// Your mail transporter setup
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: 'skylinecapitalam@gmail.com',
-    pass: '@Josh7887',
-  },
-});
-
-module.exports = router;
+// Run the test
+mailer.testConnection();

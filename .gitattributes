@@ -1,0 +1,6 @@
+node_modules/.cache/default-development/0.pack filter=lfs diff=lfs merge=lfs -text
+build/videos/*.mp4 filter=lfs diff=lfs merge=lfs -text
+node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs filter=lfs diff=lfs merge=lfs -text
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.pack filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text

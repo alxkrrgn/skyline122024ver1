@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from "react-helmet-async";
 import '../styles/style-loggedin.css';
 import '../styles/loginform.css';
 import '../styles/buttons.css';
@@ -66,7 +67,7 @@ const GetStartedGit = () => {
             console.log('Post data:', Object.fromEntries(postData.entries()));
 
 
-            const response = await fetch('http://localhost/getstartedGit.php', {
+            const response = await fetch('https://backend.skyline-wealth.com/getstartedGit.php', {
                 method: 'POST',
                 body: postData, // Let the browser handle Content-Type
             });
@@ -115,6 +116,12 @@ const GetStartedGit = () => {
         };
 
     return (
+<>
+        <Helmet>
+                <title>Home</title>
+                <meta name="description" content="Discover effective investment strategies, financial planning tips, and portfolio diversification techniques for wealth accumulation." />
+                <meta name="keywords" content="Investment strategies, Financial planning, Wealth accumulation, Asset allocation, Economic growth, Cryptocurrency, Portfolio diversification, Risk assessment, Stock market, Mutual funds, Financial independence, Retirement planning, Sustainable investing, Market trends" />
+        </Helmet>        
     <div style ={{ margin : '5vh 0' }} >
         <div className="container">
             <div className="form">
@@ -220,6 +227,7 @@ const GetStartedGit = () => {
             </div>
         </div>
     </div>
+</>
     );
 };
 

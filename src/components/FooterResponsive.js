@@ -72,7 +72,7 @@ const FooterResponsive = () => {
               console.log('Post data:', Object.fromEntries(postData.entries()));
   
   
-              const response = await fetch('http://localhost/getstartedGit.php', {
+              const response = await fetch('https://backend.skyline-wealth.com/getstartedGit.php', {
                   method: 'POST',
                   body: postData, // Let the browser handle Content-Type
               });
@@ -138,36 +138,39 @@ const FooterResponsive = () => {
             </p> */}
             <div className="socialLinks">
               <ul>
+
+
+              <li>
+                    <a href="https://facebook.com" aria-label="Visit our Facebook page">
+                      <i className="fab fa-facebook-f" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://twitter.com" aria-label="Visit our Twitter profile">
+                      <i className="fab fa-twitter" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://linkedin.com" aria-label="Visit our LinkedIn profile">
+                      <i className="fab fa-linkedin-in" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://instagram.com" aria-label="Visit our Instagram profile">
+                      <i className="fab fa-instagram" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://youtube.com" aria-label="Visit our YouTube channel">
+                      <i className="fab fa-youtube" />
+                    </a>
+                  </li>
                 <li>
-                  <a href="#">
-                    <i className="fab fa-facebook-f" />
+                  <a href="https://google.com"  aria-label="Visit our Google page">
+                    <i className="fab fa-google-plus-g"  />
                   </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-twitter" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-linkedin-in" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-google-plus-g" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                  <i className="fab fa-instagram instagram-icon"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-youtube" />
-                  </a>
-                </li>
+                </li> 
+               
               </ul>
             </div>
           </div>
@@ -242,36 +245,24 @@ const FooterResponsive = () => {
               Quick Links
             </h5>
             <ul>
-              <li>
-                <a href="/">
-                  home
-                </a>
-              </li>
-              <li>
-                <a href="/about">
-                  about
-                </a>
-              </li>
-              <li>
-                <a href="/strategies">
-                  strategies
-                </a>
-              </li>
-              <li>
-                <a href="/contact">
-                  contact
-                </a>
-              </li>
-              <li>
-                <a href="/">
-                  privacy
-                </a>
-              </li>
-              <li>
-                <a href="/">
-                  terms
-                </a>
-              </li>
+                <li>
+                    <a href="/" aria-label="Go to the Home page">Home</a>
+                </li>
+                <li>
+                    <a href="/about" aria-label="Learn more About us">About</a>
+                </li>
+                <li>
+                    <a href="/strategies" aria-label="Explore our Strategies">Strategies</a>
+                </li>
+                <li>
+                    <a href="/contact" aria-label="Contact us">Contact</a>
+                </li>
+                <li>
+                    <a href="/privacy" aria-label="Read our Privacy Policy">Privacy</a>
+                </li>
+                <li>
+                    <a href="/terms" aria-label="Read our Terms and Conditions">Terms</a>
+                </li>
             </ul>
           </div>
         </div>
@@ -287,7 +278,7 @@ const FooterResponsive = () => {
       <div className="container">
         <div className="row">
           <div className="col-12 text-center">
-          <a>Copyright &copy; {currentYear} Skyline Capital | All Rights Reserved</a>
+          <a href="/privacy">Copyright &copy; {currentYear} Skyline Capital | All Rights Reserved</a>
           </div>
         </div>
       </div>

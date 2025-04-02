@@ -39,13 +39,13 @@ const NavigationMenu = () => {
             return () => clearTimeout(timer);
         }
     }, [isLoggedIn]);
-
+/*
     useEffect(() => {
         if (redirectPending) {
             navigate('/dashboard');
         }
     }, [redirectPending, navigate]);
-
+*/
     /*
     useEffect(() => {
         if (isLoggedIn) {

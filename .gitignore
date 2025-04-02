@@ -1,1 +1,10 @@
+# Ignore dependencies and cache
+node_modules/
+node_modules/.cache/
+.env
+
+# Ignore videos
+public/videos/
+src/assets/videos/
+
 node_modules

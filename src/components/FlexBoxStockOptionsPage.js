@@ -4,6 +4,7 @@ import SixCardsLongCallPut from './SixCardsLongCallPut';
 import SixCardsShortCallPut from './SixCardsShortCallPut';
 import SixCards from './SixCards';
 import FwtStockOptions from './FwtStockOptions';
+import { Helmet } from "react-helmet-async";
 
 const FlexBoxStockOptionsPage = () => {
   const containerStyle = {
@@ -19,6 +20,11 @@ const FlexBoxStockOptionsPage = () => {
 
   return (
     <>
+      <Helmet>
+              <title>About</title>
+              <meta name="description" content="Discover effective investment strategies, financial planning tips, and portfolio diversification techniques for wealth accumulation." />
+              <meta name="keywords" content="Investment strategies, Financial planning, Wealth accumulation, Asset allocation, Economic growth, Cryptocurrency, Portfolio diversification, Risk assessment, Stock market, Mutual funds, Financial independence, Retirement planning, Sustainable investing, Market trends" />
+      </Helmet>
       <FwtStockOptions />
       {/* First div: FlexBox strategies */}
       <div style={containerStyle}>

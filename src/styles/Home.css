@@ -38,7 +38,7 @@ main {
 }
 
 .spacer1 {
-  margin-top: 30vh; /* Default for desktop */
+  margin-top: 0vh; /* Default for desktop */
 }
 
 /*
@@ -49,11 +49,12 @@ section {
 @media (max-width: 768px) {
   .spacer {
     margin-top: 2vh; /* Default for desktop */
-    margin-bottom: 2vh; /* Default for desktop */
+    margin-bottom: 5vh; /* Default for desktop */
 
   }
   .spacer1 {
-    margin-top: 25vh; /* Default for desktop */
+    margin-top: 2vh; /* Default for desktop */
+    margin-bottom: 5vh; /* Default for desktop */
    
   }
 }
