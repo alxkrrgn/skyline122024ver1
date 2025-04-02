@@ -76,20 +76,12 @@ const ContactAwsSes = () => {
         }
 
         try {
-            /*
+            
             const API_URL = window.location.hostname.includes('skylinecapital.info')
                 ? 'https://skylinecapital.info/api/send-email'
                 : 'https://skyline-wealth.com/api/send-email';
 
             const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-            */
-            const response = await fetch('http://localhost:3001/api/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

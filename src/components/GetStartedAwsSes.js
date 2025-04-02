@@ -70,7 +70,7 @@ const GetStartedAwsSes = () => {
         
             console.log('Post data:', Object.fromEntries(postData.entries()));
 
-            /*
+            
             const API_URL = window.location.hostname.includes('skylinecapital.info')
                 ? 'https://skylinecapital.info/api/send-email'
                 : 'https://skyline-wealth.com/api/send-email';
@@ -82,14 +82,7 @@ const GetStartedAwsSes = () => {
                 },
                 body: JSON.stringify(formData),
             });
-            */
-            const response = await fetch('http://localhost:3001/api/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+
 
             const responseHTML = await fetch('https://backend.skyline-wealth.com/getstartedGit.php', {
                 method: 'POST',
