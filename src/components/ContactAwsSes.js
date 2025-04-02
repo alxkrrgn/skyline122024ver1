@@ -105,7 +105,8 @@ const ContactAwsSes = () => {
             console.log('Response status:', response.status);
             console.log('Response HTML status:', responseHTML.status);
 
-            if (!response.ok || !responseHTML.ok) {
+            //if (!response.ok || !responseHTML.ok) {
+            if ( !responseHTML.ok) {
                 // Log errors and show the appropriate error message
                 console.error(`Error: Response status: ${response.status}, Response HTML status: ${responseHTML.status}`);
             
@@ -120,7 +121,7 @@ const ContactAwsSes = () => {
             const dataHTML = await responseHTML.json();
             
             // Check if both responses have success messages
-            if (data.success && dataHTML.success) {
+            if (data.success || dataHTML.success) {
                 setServerMessage({ 
                     text: data.message || 'Message sent successfully! We will get back to you soon.', 
                     type: 'success' 
