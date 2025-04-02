@@ -46,37 +46,37 @@ const ContactAwsSes = () => {
 
         // Validation
         if (!formData.email) {
-            setServerMessage({ text: 'Please enter your email', type: 'error' });
+            setServerMessage({ text: 'Please enter your email:', type: 'error' });
             setIsSubmitting(false);
             return;
         }
 
         if (!validateEmail(formData.email)) {
-            setServerMessage({ text: 'Please enter a valid email', type: 'error' });
+            setServerMessage({ text: 'Please enter a valid email:', type: 'error' });
             setIsSubmitting(false);
             return;
         }
 
         if (!formData.name) {
-            setServerMessage({ text: 'Please enter your name', type: 'error' });
+            setServerMessage({ text: 'Please enter your name:', type: 'error' });
             setIsSubmitting(false);
             return;
         }
 
         if (!formData.subject) {
-            setServerMessage({ text: 'Please enter a subject', type: 'error' });
+            setServerMessage({ text: 'Please enter a subject:', type: 'error' });
             setIsSubmitting(false);
             return;
         }
 
         if (!formData.message) {
-            setServerMessage({ text: 'Please type a message', type: 'error' });
+            setServerMessage({ text: 'Please type a message:', type: 'error' });
             setIsSubmitting(false);
             return;
         }
 
         try {
-            
+            /*
             const API_URL = window.location.hostname.includes('skylinecapital.info')
                 ? 'https://skylinecapital.info/api/send-email'
                 : 'https://skyline-wealth.com/api/send-email';
@@ -88,7 +88,7 @@ const ContactAwsSes = () => {
                 },
                 body: JSON.stringify(formData),
             });
-
+            */
             const postData = new FormData();
                         postData.append('email', formData.email);
                         postData.append('name', formData.name);
@@ -102,26 +102,30 @@ const ContactAwsSes = () => {
                 body: postData, // Let the browser handle Content-Type
             });
 
-            console.log('Response status:', response.status);
-            console.log('Response HTML status:', responseHTML.status);
+           // console.log('Response status:', response.status);
+           // console.log('Response HTML status:', responseHTML.status);
 
             
-            if (!response.ok || !responseHTML.ok) {
+            //if (!response.ok || !responseHTML.ok) {
+            if (!responseHTML.ok) {   
                 // Log errors and show the appropriate error message
-                console.error(`Error: Response status: ${response.status}, Response HTML status: ${responseHTML.status}`);
+                //console.error(`Error: Response status: ${response.status}, Response HTML status: ${responseHTML.status}`);
+                console.error(`Error: Response HTML status: ${responseHTML.status}`);
             
                 setServerMessage({ 
-                    text: `Error: ${response.status} || ${responseHTML.status}. Please try again later.`,
+                   // text: `Error: ${response.status} || ${responseHTML.status}. Please try again later.`,
+                    text: `Error: ${responseHTML.status}. Please try again later.`,
                     type: 'error'
                 });
                 return;  // Stop execution if there is an error
             }
             
-            const data = await response.json();
+            //const data = await response.json();
             const dataHTML = await responseHTML.json();
             
             // Check if both responses have success messages
-            if (data.success || dataHTML.success) {
+           // if (data.success || dataHTML.success) {
+            if ( dataHTML.success) {   
                 setServerMessage({ 
                     text: dataHTML.message || 'Message sent successfully! We will get back to you soon.', 
                     type: 'success' 
@@ -129,7 +133,8 @@ const ContactAwsSes = () => {
             } else {
                 // If either response contains an error, display the error message
                 setServerMessage({ 
-                    text: data.error || dataHTML.error || 'An unexpected error occurred. Please try again.', 
+                   // text: data.error || dataHTML.error || 'An unexpected error occurred. Please try again.', 
+                    text: dataHTML.error || 'An unexpected error occurred. Please try again.', 
                     type: 'error' 
                 });
             }
