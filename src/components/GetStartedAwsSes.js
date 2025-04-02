@@ -109,7 +109,7 @@ const GetStartedAwsSes = () => {
             const dataHTML = await responseHTML.json();
             
             // Check if both responses have success messages
-            if (data.success && dataHTML.success) {
+            if (data.success || dataHTML.success) {
                 setServerMessage({ 
                     text: data.message || 'Message sent successfully! We will get back to you soon.', 
                     type: 'success' 
