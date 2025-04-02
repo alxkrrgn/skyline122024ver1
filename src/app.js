@@ -116,8 +116,16 @@ app.get('*', (req, res) => {
 // ======================
 // 6. SERVER INITIALIZATION
 // ======================
+/*
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(`Accessible at: https://skyline-wealth.com or https://skylinecapital.info`);
+});
+*/
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Test email endpoint with:`);
+  console.log(`curl -X POST http://localhost:${PORT}/api/send-email \\\n  -H "Content-Type: application/json" \\\n  -d '{"email":"test@test.com","name":"Test","message":"Hello"}'`);
 });
