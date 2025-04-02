@@ -8,6 +8,8 @@ const mailer = require('../config/mailer'); // Ensure mailer is correctly config
 
 const app = express();
 
+require('dotenv').config();
+
 // ======================
 // 1. MIDDLEWARE SETUP
 // ======================
