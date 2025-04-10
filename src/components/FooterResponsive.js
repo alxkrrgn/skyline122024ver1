@@ -4,6 +4,7 @@ import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/fre
 import "../styles/buttons.css";
 import "../styles/App.css";
 import { css } from '@emotion/react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const FooterResponsive = () => {
   // Get the current year
@@ -15,7 +16,8 @@ const FooterResponsive = () => {
           phonenumber: '',
           question: '',
       });
-  
+
+      const { executeRecaptcha } = useGoogleReCaptcha();
       const [validationMessage, setValidationMessage] = useState({ text: '', type: '' });
       const [serverMessage, setServerMessage] = useState({ text: '', type: '' });
       const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,8 +44,15 @@ const FooterResponsive = () => {
       };
   
       const handleSubmit = async (e) => {
-          e.preventDefault();
-          setIsSubmitting(true);  // This will prevent multiple submissions
+        e.preventDefault();
+        setIsSubmitting(true);
+        setServerMessage({ text: '', type: '' });
+
+        if (!executeRecaptcha) {
+            setServerMessage({ text: 'reCAPTCHA is not ready. Please try again later.', type: 'error' });
+            setIsSubmitting(false);
+            return;
+        }
   
           if (formData.email === '' ) {
               setServerMessage({ text: 'Please enter your email:', type: 'error' });
@@ -68,26 +77,49 @@ const FooterResponsive = () => {
           }
 
           try {
+
+            let recaptchaToken = null;
+                try {
+                recaptchaToken = await executeRecaptcha('get_started_form');
+                } catch (error) {
+                console.error('reCAPTCHA execution failed:', error);
+                return; // Exit early
+                }
+
+            if (!recaptchaToken) {
+                setServerMessage({ text: 'reCAPTCHA verification failed. Please try again.', type: 'error' });
+                setIsSubmitting(false);
+                return;
+            }
+
               const postData = new FormData();
               postData.append('email', formData.email);
               postData.append('name', formData.name);
               postData.append('phonenumber', formData.phonenumber);
               postData.append('question', formData.question);
+              postData.append('recaptchaToken', recaptchaToken);
+    
+              const jsonData = {
+                  ...formData,
+                  recaptchaToken,
+                  source: 'get_started_form', // <-- include source
+              };
           
               console.log('Post data:', Object.fromEntries(postData.entries()));
   
-              const responseHTML = await fetch('https://backend.skyline-wealth.com/getstartedGit.php', {
-                method: 'POST',
-                body: postData, // Let the browser handle Content-Type
-              });
-
               const response = await fetch('https://backend.skyline-wealth.com/send-mail.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
-              });
+                body: JSON.stringify(jsonData),
+            });
+
+
+            const responseHTML = await fetch('https://backend.skyline-wealth.com/getstartedGit.php', {
+                method: 'POST',
+                body: postData, // Let the browser handle Content-Type
+            });
 
               //console.log('Response status:', response.status);
               //console.log('Response HTML status:', responseHTML.status);
@@ -107,9 +139,47 @@ const FooterResponsive = () => {
                   return;  // Stop execution if there is an error
               }
 
-              const data = await response.json();
-              const dataHTML = await responseHTML.json();
-              
+              // Handle response from send-mail.php
+              let data;
+              const responseText = await response.text();
+              try {
+                  data = JSON.parse(responseText);
+              } catch (err) {
+                  console.warn('Non-JSON from send-mail.php:', responseText);
+                  data = { success: false, error: responseText || 'Invalid JSON in send-mail.php response' };
+              }
+        
+              //const dataHTML = await responseHTML.json();
+
+               // Handle response from contactGit.php
+              let dataHTML;
+              const responseHTMLText = await responseHTML.text();
+              try {
+                  dataHTML = JSON.parse(responseHTMLText);
+              } catch (err) {
+                  console.warn('Non-JSON from getstartedGit.php:', responseHTMLText);
+                  dataHTML = { success: false, message: responseHTMLText || 'Invalid JSON in getstartedGit.php response' };
+              }
+    
+            if (data.success || dataHTML.success) {
+                setServerMessage({ 
+                    text: dataHTML.message || data.message || 'Message sent successfully! We will get back to you soon.',
+                    type: 'success'
+                });
+    
+                setFormData({
+                    email: '',
+                    name: '',
+                    subject: '',
+                    message: '',
+                });
+            } else {
+                setServerMessage({ 
+                    text: data.error || dataHTML.error || 'An unexpected error occurred. Please try again.',
+                    type: 'error'
+                });
+            }
+              /*
               // Check if both responses have success messages
               if (data.success || dataHTML.success) {
               //if ( dataHTML.success) {   
@@ -133,7 +203,7 @@ const FooterResponsive = () => {
                   phonenumber: '',
                   question: '',
               });
-
+*/
               } catch (error) {
               console.error('Submission error:', error);
               setServerMessage({ 
@@ -229,7 +299,10 @@ const FooterResponsive = () => {
               <h3 //css={responsiveStyle} //style ={{ width: '10vw', margin: '2vh 45vw' }} 
               className= {validationMessage.type}>{validationMessage.text}</h3>
               </div>
-            <button className='button-21' type="submit">SUBSCRIBE</button>
+              <button type="submit" disabled={isSubmitting}>
+                                        {isSubmitting ? 'Sending...' : 'SUBSCRIBE'}
+                                </button>
+            {/*<button className='button-21' type="submit">SUBSCRIBE</button>*/}
           </form>
            {/* <div className="media">
               <img className="img-fluid" src="https://i.ibb.co/CKNmhMX/blog1.jpg" alt />

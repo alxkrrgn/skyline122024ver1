@@ -1,18 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'; // React 18+
-import './styles/index.css'; // Import global styles (optional)
-import App from './App'; // Import the main App component
+import ReactDOM from 'react-dom/client';
+import './styles/index.css';
+import App from './App';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
-/*
-ReactDOM.render(
-  <App />,  // No Router here, App.js will handle routing
- document.getElementById('root') // Attach the app to the root div in index.html
-);
+//window.addEventListener('unhandledrejection', (event) => {
+ // console.error('UNHANDLED PROMISE REJECTION:', event.reason);
+//});
 
-*/
-const root = ReactDOM.createRoot(document.getElementById('root')); // Use createRoot
+// Replace this with your actual site key from Google reCAPTCHA v3
+const RECAPTCHA_SITE_KEY = '6LfxLw0rAAAAAAOsF0Hbb7HziAttIlkfHciRcSso';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  //<React.StrictMode>
+  <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_SITE_KEY}>
     <App />
-  //</React.StrictMode>
-); 
+  </GoogleReCaptchaProvider>
+);

@@ -36,6 +36,25 @@ import Terms from './components/Terms';
 import SitemapPage from './components/SitemapPage';
 import Clarity from './Clarity';
 
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+
+//window.addEventListener('unhandledrejection', (event) => {
+ // console.error('UNHANDLED PROMISE REJECTION:', event.reason);
+//});
+
+<GoogleReCaptchaProvider
+  reCaptchaKey="6LfxLw0rAAAAAAOsF0Hbb7HziAttIlkfHciRcSso"
+  scriptProps={{
+    async: true,
+    defer: true,
+    appendTo: 'head',
+    nonce: undefined,
+  }}
+>
+  <ContactAwsSes />
+</GoogleReCaptchaProvider>
+
+
 //const mailer = require('./config/mailer'); // Correct relative path
 //app.use('/config', mailer);
    // Initialize AOS with custom settings
