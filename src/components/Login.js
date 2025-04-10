@@ -5,13 +5,16 @@ import '../styles/style-loggedin.css';
 import '../styles/loginform.css';
 import '../styles/buttons.css';
 import FormData from "form-data";
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const Login = () => {
 
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [serverMessage, setServerMessage] = useState({ text: '', type: '' });
-  const [validationMessage, setValidationMessage] = useState({ text: '', type: '' });
-  const navigate = useNavigate();
+    const { executeRecaptcha } = useGoogleReCaptcha();
+    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [serverMessage, setServerMessage] = useState({ text: '', type: '' });
+    const [validationMessage, setValidationMessage] = useState({ text: '', type: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
 
     //const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -36,30 +39,57 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
+        setServerMessage({ text: '', type: '' });
+
+        if (!executeRecaptcha) {
+            setServerMessage({ text: 'reCAPTCHA is not ready. Please try again later.', type: 'error' });
+            setIsSubmitting(false);
+            return;
+        }
 
         if (formData.email === '' ) {
             setServerMessage({ text: 'Please enter your email:', type: 'error' });
+            setIsSubmitting(false);
             return;
         }
 
         if (formData.password === '' ) {
             setServerMessage({ text: 'Please enter your password:', type: 'error' });
+            setIsSubmitting(false);
             return;
         }
 
         try {
+
+            let recaptchaToken = null;
+            try {
+            recaptchaToken = await executeRecaptcha('contact_form');
+            } catch (error) {
+            console.error('reCAPTCHA execution failed:', error);
+            return; // Exit early
+            }
+
+            if (!recaptchaToken) {
+                setServerMessage({ text: 'reCAPTCHA verification failed. Please try again.', type: 'error' });
+                setIsSubmitting(false);
+                return;
+            }
+
             const postData = new FormData();
             postData.append('email', formData.email);
             postData.append('password', formData.password);
+            postData.append('recaptchaToken', recaptchaToken);
         
             console.log('Post data:', Object.fromEntries(postData.entries()));
         
+            // Send the form data to login.php
             const response = await fetch('https://backend.skyline-wealth.com/login.php', {
                 method: 'POST',
                 body: postData, // Let the browser handle Content-Type
             });
         
-            console.log('Response status:', response.status);
+            //console.log('Response status:', response.status);
         
             // Check for server-side errors
             if (!response.ok) {
@@ -179,6 +209,11 @@ const Login = () => {
                                 <button onClick={() => (window.location.href = '/auth/twitter')}>Login with Twitter</button>
                             </div>
                             </div>
+                            <small>
+                                    This site is protected by reCAPTCHA and the Google
+                                    <a href="https://policies.google.com/privacy"> Privacy Policy </a> and
+                                    <a href="https://policies.google.com/terms"> Terms of Service</a> apply.
+                            </small>
                         </form>
                     </div>
                 </div>

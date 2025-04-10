@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Ensure React Router is set up
 import { Helmet } from "react-helmet-async";
 import '../styles/style-loggedin.css';
 import '../styles/loginform.css';
 import '../styles/buttons.css';
 import FormData from "form-data";
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
-const Register = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        cpass: '',
-    });
+const Login = () => {
 
-    const { executeRecaptcha } = useGoogleReCaptcha();
-    const [validationMessage, setValidationMessage] = useState({ text: '', type: '' });
-    const [serverMessage, setServerMessage] = useState({ text: '', type: '' });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [serverMessage, setServerMessage] = useState({ text: '', type: '' });
+  const [validationMessage, setValidationMessage] = useState({ text: '', type: '' });
+  const navigate = useNavigate();
 
     //const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -41,59 +36,25 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
-        setServerMessage({ text: '', type: '' });
-
-
-        if (!executeRecaptcha) {
-            setServerMessage({ text: 'reCAPTCHA is not ready. Please try again later.', type: 'error' });
-            setIsSubmitting(false);
-            return;
-        }
 
         if (formData.email === '' ) {
             setServerMessage({ text: 'Please enter your email:', type: 'error' });
-            setIsSubmitting(false);
             return;
         }
 
-        if (formData.password === '' || formData.cpass === '' ) {
+        if (formData.password === '' ) {
             setServerMessage({ text: 'Please enter your password:', type: 'error' });
-            setIsSubmitting(false);
-            return;
-        }
-
-        if (formData.password !== formData.cpass) {
-            setServerMessage({ text: 'Passwords do not match:', type: 'error' });
-            setIsSubmitting(false);
             return;
         }
 
         try {
-
-            let recaptchaToken = null;
-            try {
-            recaptchaToken = await executeRecaptcha('contact_form');
-            } catch (error) {
-            console.error('reCAPTCHA execution failed:', error);
-            return; // Exit early
-            }
-
-            if (!recaptchaToken) {
-                setServerMessage({ text: 'reCAPTCHA verification failed. Please try again.', type: 'error' });
-                setIsSubmitting(false);
-                return;
-            }
-
             const postData = new FormData();
             postData.append('email', formData.email);
             postData.append('password', formData.password);
-            postData.append('cpass', formData.cpass);
-            postData.append('recaptchaToken', recaptchaToken);
         
             console.log('Post data:', Object.fromEntries(postData.entries()));
         
-            const response = await fetch('https://backend.skyline-wealth.com/register.php', {
+            const response = await fetch('https://backend.skyline-wealth.com/login.php', {
                 method: 'POST',
                 body: postData, // Let the browser handle Content-Type
             });
@@ -117,21 +78,28 @@ const Register = () => {
             const data = JSON.parse(rawText); // Parse JSON
             console.log('Parsed response:', data);
 
- 
             console.log('Response data:', data);
 
             if (data.success) {
-                    setServerMessage({ text: `Success: ${data.message}`, type: 'success' });
-                    setFormData({ email: '', password: '', cpass: '' });
-            } else {
-                    setServerMessage({ text: `Error: ${data.error}`, type: 'error' });
-                    }
-            } catch (error) {
-                    console.error('Error in fetch or processing:', error);
-                    setServerMessage({ text: 'An error occurred during registration.', type: 'error' });
-                }
-    
-    };
+              setServerMessage({ text: data.message, type: 'success' });
+              localStorage.setItem('userData', JSON.stringify(data.userData));
+              setTimeout(() => {
+                  navigate(data.redirect); // Redirect to the dashboard
+              }, 2000);
+            // if (data.redirect) {
+           //   window.location.href = data.redirect; // Navigate to /dashboard
+                  //    }
+               } else {
+                   setServerMessage({ text: data.error, type: 'error' });
+               }
+           } catch (error) {
+                  console.error('Error:', error);
+                   setServerMessage({
+                  text: 'An error occurred during login.',
+                  type: 'error',
+             });
+          }
+  };
 
     return (
 <>
@@ -139,14 +107,14 @@ const Register = () => {
                 <title>Home</title>
                 <meta name="description" content="Discover effective investment strategies, financial planning tips, and portfolio diversification techniques for wealth accumulation." />
                 <meta name="keywords" content="Investment strategies, Financial planning, Wealth accumulation, Asset allocation, Economic growth, Cryptocurrency, Portfolio diversification, Risk assessment, Stock market, Mutual funds, Financial independence, Retirement planning, Sustainable investing, Market trends" />
-        </Helmet>
+        </Helmet>        
 
     <div style ={{ margin : '5vh 0' }} >
         <div className="container">
             <div className="form">
                 <div className="form-panel one">
                     <div className="form-header">
-                        <h1 style={{ textShadow: 'none' }}>Register</h1>
+                        <h1 style={{ textShadow: 'none' }}>Login</h1>
                     </div>
                     <div className="form-content">
                        {/* <h3 className={serverMessage.type}>{serverMessage.text}</h3> */}
@@ -184,19 +152,9 @@ const Register = () => {
                                     onChange={handleChange}
                                 />
                             </div>
+                            
                             <div className="form-group">
-                                <label htmlFor="cpass">Confirm Password</label>
-                                <input
-                                    type="password"
-                                    id="cpass"
-                                    name="cpass"
-                                    placeholder="Confirm Password..."
-                                    value={formData.cpass}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <button type="submit">Register</button>
+                                <button type="submit">Login</button>
                             </div>
 
                             <div className="form-group">
@@ -206,8 +164,8 @@ const Register = () => {
                                 <a className="form-recovery" href="/login">
                                     Forgot Password?
                                 </a>
-                                <a className="form-recovery" href="/login">
-                                    Already have an account? Login here
+                                <a className="form-recovery" href="/register">
+                                    Don't have an account? Register here
                                 </a>
                             </div>
                             <div className="line">
@@ -221,11 +179,6 @@ const Register = () => {
                                 <button onClick={() => (window.location.href = '/auth/twitter')}>Login with Twitter</button>
                             </div>
                             </div>
-                            <small>
-                                    This site is protected by reCAPTCHA and the Google
-                                    <a href="https://policies.google.com/privacy"> Privacy Policy </a> and
-                                    <a href="https://policies.google.com/terms"> Terms of Service</a> apply.
-                            </small>
                         </form>
                     </div>
                 </div>
@@ -236,5 +189,5 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;
 

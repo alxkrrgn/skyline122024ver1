@@ -94,7 +94,7 @@ const ContactAwsSes = () => {
     
             console.log('Post data:', Object.fromEntries(postData.entries()));
     
-            
+            // Send the form data to contactGit.php
             const responseHTML = await fetch('https://backend.skyline-wealth.com/contactGit.php', {
                 method: 'POST',
                 body: postData, // Let the browser handle Content-Type

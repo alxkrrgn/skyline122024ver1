@@ -4,7 +4,6 @@ import '../styles/style-loggedin.css';
 import '../styles/loginform.css';
 import '../styles/buttons.css';
 import FormData from "form-data";
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -13,10 +12,8 @@ const Register = () => {
         cpass: '',
     });
 
-    const { executeRecaptcha } = useGoogleReCaptcha();
     const [validationMessage, setValidationMessage] = useState({ text: '', type: '' });
     const [serverMessage, setServerMessage] = useState({ text: '', type: '' });
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
     //const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -41,55 +38,27 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
-        setServerMessage({ text: '', type: '' });
-
-
-        if (!executeRecaptcha) {
-            setServerMessage({ text: 'reCAPTCHA is not ready. Please try again later.', type: 'error' });
-            setIsSubmitting(false);
-            return;
-        }
 
         if (formData.email === '' ) {
             setServerMessage({ text: 'Please enter your email:', type: 'error' });
-            setIsSubmitting(false);
             return;
         }
 
         if (formData.password === '' || formData.cpass === '' ) {
             setServerMessage({ text: 'Please enter your password:', type: 'error' });
-            setIsSubmitting(false);
             return;
         }
 
         if (formData.password !== formData.cpass) {
             setServerMessage({ text: 'Passwords do not match:', type: 'error' });
-            setIsSubmitting(false);
             return;
         }
 
         try {
-
-            let recaptchaToken = null;
-            try {
-            recaptchaToken = await executeRecaptcha('contact_form');
-            } catch (error) {
-            console.error('reCAPTCHA execution failed:', error);
-            return; // Exit early
-            }
-
-            if (!recaptchaToken) {
-                setServerMessage({ text: 'reCAPTCHA verification failed. Please try again.', type: 'error' });
-                setIsSubmitting(false);
-                return;
-            }
-
             const postData = new FormData();
             postData.append('email', formData.email);
             postData.append('password', formData.password);
             postData.append('cpass', formData.cpass);
-            postData.append('recaptchaToken', recaptchaToken);
         
             console.log('Post data:', Object.fromEntries(postData.entries()));
         
@@ -221,11 +190,6 @@ const Register = () => {
                                 <button onClick={() => (window.location.href = '/auth/twitter')}>Login with Twitter</button>
                             </div>
                             </div>
-                            <small>
-                                    This site is protected by reCAPTCHA and the Google
-                                    <a href="https://policies.google.com/privacy"> Privacy Policy </a> and
-                                    <a href="https://policies.google.com/terms"> Terms of Service</a> apply.
-                            </small>
                         </form>
                     </div>
                 </div>
