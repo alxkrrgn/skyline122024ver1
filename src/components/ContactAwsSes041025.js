@@ -92,21 +92,22 @@ const ContactAwsSes = () => {
                 source: 'contact_form', // <-- include source
             };
     
-            console.log('Post data:', Object.fromEntries(postData.entries()));
+            //console.log('Post data:', Object.fromEntries(postData.entries()));
     
-            
+            const response = await fetch('https://backend.skyline-wealth.com/send-mail.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            });
+    
             const responseHTML = await fetch('https://backend.skyline-wealth.com/contactGit.php', {
                 method: 'POST',
-                body: postData, // Let the browser handle Content-Type
+                body: postData,
             });
-
-
-            //console.log('Response status:', response.status);
-            //console.log('Response HTML status:', responseHTML.status);
-        
-           // if (!response.ok || !responseHTML.ok) {
-            if ( !responseHTML.ok) {
-                   
+    
+            if (!response.ok || !responseHTML.ok) {
                 console.error(`Error: Response status: ${response.status}, HTML status: ${responseHTML.status}`);
                 setServerMessage({ 
                     text: `Error: ${response.status} || ${responseHTML.status}. Please try again later.`,
@@ -116,7 +117,16 @@ const ContactAwsSes = () => {
                 return;
             }
     
-           
+                    // Handle response from send-mail.php
+            let data;
+            const responseText = await response.text();
+            try {
+                data = JSON.parse(responseText);
+            } catch (err) {
+                console.warn('Non-JSON from send-mail.php:', responseText);
+                data = { success: false, error: responseText || 'Invalid JSON in send-mail.php response' };
+            }
+
             // Handle response from contactGit.php
             let dataHTML;
             const responseHTMLText = await responseHTML.text();
@@ -126,48 +136,8 @@ const ContactAwsSes = () => {
                 console.warn('Non-JSON from contactGit.php:', responseHTMLText);
                 dataHTML = { success: false, message: responseHTMLText || 'Invalid JSON in contactGit.php response' };
             }
-
-            //if (data.error || dataHTML.error) {
-            if ( dataHTML.error) {   
-                setServerMessage({ 
-                    text: dataHTML.error || data.error || 'Duplicate email error/Send email failure! Please try again',
-                    type: 'error'
-                });
-
-            } 
-
-            else if (dataHTML.success) {
-
-                const response = await fetch('https://backend.skyline-wealth.com/send-mail.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(jsonData),
-                });
-
-                            // Handle response from send-mail.php
-                let data;
-                const responseText = await response.text();
-                try {
-                    data = JSON.parse(responseText);
-                } catch (err) {
-                    console.warn('Non-JSON from send-mail.php:', responseText);
-                    data = { success: false, error: responseText || 'Invalid JSON in send-mail.php response' };
-                }
-
-                if (!response.ok || !responseHTML.ok) {
-                   
-                console.error(`Error: Response status: ${response.status}, HTML status: ${responseHTML.status}`);
-                setServerMessage({ 
-                    text: `Error: ${response.status} || ${responseHTML.status}. Please try again later.`,
-                    type: 'error'
-                });
-                setIsSubmitting(false);
-                return;
-                }
-
-                if (data.success || dataHTML.success) {
+    
+            if (data.success || dataHTML.success) {
                 setServerMessage({ 
                     text: dataHTML.message || data.message || 'Message sent successfully! We will get back to you soon.',
                     type: 'success'
@@ -179,7 +149,6 @@ const ContactAwsSes = () => {
                     subject: '',
                     message: '',
                 });
-            }
             } else {
                 setServerMessage({ 
                     text: data.error || dataHTML.error || 'An unexpected error occurred. Please try again.',

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.7a008063.css",
-    "main.js": "/static/js/main.7490fd6e.js",
+    "main.css": "/static/css/main.95350a66.css",
+    "main.js": "/static/js/main.48f62f9c.js",
     "static/js/430.fd2de941.chunk.js": "/static/js/430.fd2de941.chunk.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.8dcdaed6.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.90ceeb99.chunk.js",
@@ -23,8 +23,8 @@
     "static/media/AAPL_options_table.png": "/static/media/AAPL_options_table.5c695cbadb4c120ef461.png",
     "static/media/AAPL_call_risk_chart.png": "/static/media/AAPL_call_risk_chart.44d14642ddcf56faff7f.png",
     "index.html": "/index.html",
-    "main.7a008063.css.map": "/static/css/main.7a008063.css.map",
-    "main.7490fd6e.js.map": "/static/js/main.7490fd6e.js.map",
+    "main.95350a66.css.map": "/static/css/main.95350a66.css.map",
+    "main.48f62f9c.js.map": "/static/js/main.48f62f9c.js.map",
     "430.fd2de941.chunk.js.map": "/static/js/430.fd2de941.chunk.js.map",
     "reactPlayerYouTube.8dcdaed6.chunk.js.map": "/static/js/reactPlayerYouTube.8dcdaed6.chunk.js.map",
     "reactPlayerSoundCloud.90ceeb99.chunk.js.map": "/static/js/reactPlayerSoundCloud.90ceeb99.chunk.js.map",
@@ -42,7 +42,7 @@
     "reactPlayerPreview.ab3cee2c.chunk.js.map": "/static/js/reactPlayerPreview.ab3cee2c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7a008063.css",
-    "static/js/main.7490fd6e.js"
+    "static/css/main.95350a66.css",
+    "static/js/main.48f62f9c.js"
   ]
 }
