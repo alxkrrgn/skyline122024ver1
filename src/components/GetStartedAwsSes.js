@@ -84,11 +84,6 @@ const GetStartedAwsSes = () => {
             });
             */
 
-            const responseHTML = await fetch('https://backend.skyline-wealth.com/getstartedGit.php', {
-                method: 'POST',
-                body: postData, // Let the browser handle Content-Type
-            });
-
             const response = await fetch('https://backend.skyline-wealth.com/send-mail.php', {
                 method: 'POST',
                 headers: {
@@ -100,7 +95,6 @@ const GetStartedAwsSes = () => {
             //console.log('Response status:', response.status);
             //console.log('Response HTML status:', responseHTML.status);
         
-             // Check for server-side errors
             if (!response.ok || !responseHTML.ok) {
             //if (!responseHTML.ok) { 
                 // Log errors and show the appropriate error message
@@ -109,7 +103,6 @@ const GetStartedAwsSes = () => {
             
                 setServerMessage({ 
                     text: `Error: ${response.status} || ${responseHTML.status}. Please try again later.`,
-                    //text: `Error: ${responseHTML.status}. Please try again later.`,
                     type: 'error'
                 });
                 return;  // Stop execution if there is an error
@@ -120,13 +113,11 @@ const GetStartedAwsSes = () => {
             
             // Check if both responses have success messages
             if (data.success || dataHTML.success) {
-            //if ( dataHTML.success) {   
                 setServerMessage({ 
                     text: dataHTML.message || 'Message sent successfully! We will get back to you soon.', 
                     type: 'success' 
                 });
             } else {
-                // If either response contains an error, display the error message
                 setServerMessage({ 
                     text: data.error || dataHTML.error || 'An unexpected error occurred. Please try again.', 
                     //text: dataHTML.error || 'An unexpected error occurred. Please try again.', 

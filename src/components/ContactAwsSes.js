@@ -38,7 +38,6 @@ const ContactAwsSes = () => {
             });
         }
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
@@ -121,7 +120,6 @@ const ContactAwsSes = () => {
             
                 setServerMessage({ 
                     text: `Error: ${response.status} || ${responseHTML.status}. Please try again later.`,
-                    //text: `Error: ${responseHTML.status}. Please try again later.`,
                     type: 'error'
                 });
                 return;  // Stop execution if there is an error
@@ -132,7 +130,6 @@ const ContactAwsSes = () => {
             
             // Check if both responses have success messages
             if (data.success || dataHTML.success) {
-            //if ( dataHTML.success) {   
                 setServerMessage({ 
                     text: dataHTML.message || 'Message sent successfully! We will get back to you soon.', 
                     type: 'success' 
